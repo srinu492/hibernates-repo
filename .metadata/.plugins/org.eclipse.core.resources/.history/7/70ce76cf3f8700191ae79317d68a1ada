@@ -1,0 +1,19 @@
+package com.dao;
+
+
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.util.HibernateUtil;
+
+public class PersionDAOImpl implements PersionDAO{
+      SessionFactory factory=HibernateUtil.getSessionFactory();
+	@Override
+	public void getPersionAndPassportByPassportId(int id) {
+		// TODO Auto-generated method stub
+		Session session=factory.openSession();
+		org.hibernate.Query query=
+	}
+
+}

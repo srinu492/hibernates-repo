@@ -1,0 +1,18 @@
+package com.test;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.model.Department;
+import com.util.HibernateUtil;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+       SessionFactory factory=HibernateUtil.getSessionFactory();
+       Session session=factory.openSession();
+       Department  department=   session.get(Department.class,26);
+	}
+
+}

@@ -1,0 +1,102 @@
+package com.dao;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.model.Department;
+import com.model.Employee;
+import com.uti.HibernateUtil;
+
+public class EmployeeDAOImpl implements EmployeeDAO {
+	SessionFactory factory = HibernateUtil.getSessionFactory();
+
+	@Override
+	public void saveEmployee() {
+		// TODO Auto-generated method stub
+		Employee employee = new Employee();
+		employee.setEmployeeName("anish1");
+		employee.setDateOfJoining(new Date());
+		employee.setAddress("nellore");
+		Set<Employee> employees = new HashSet<Employee>();
+		employees.add(employee);
+		Department department = new Department();
+		department.setDeptName("software");
+		department.setEmployees(employees);
+		Session session = factory.openSession();
+		Transaction transaction = session.beginTransaction();
+		int id = (int) session.save(department);
+		System.out.println(id);
+		transaction.commit();
+		session.close();
+	}
+
+	@Override
+	public void fetchData(int id) {
+		// TODO Auto-generated method stub
+		Session session = factory.openSession();
+		Department department = (Department) session.get(Department.class, id);
+		System.out.println(department.getDeptName());
+Set<Employee> employees = department.getEmployees();
+		for (Employee employee : employees) {
+			System.out.println("employess Details");
+			System.out.println(employee.getEmployeeId() + "\t" + employee.getEmployeeName() + "\t"
+					+ employee.getDateOfJoining() + "\t" + employee.getAddress());
+		}
+		session.close();
+	}
+
+	@Override
+	public void removeChild(int id) {
+		// TODO Auto-generated method stub
+		Session session = factory.openSession();
+		Department department = (Department) session.get(Department.class, 26);
+		Set<Employee> employees = department.getEmployees();
+		Employee employee = (Employee) session.get(Employee.class, id);
+		Transaction transaction = session.beginTransaction();
+		employees.remove(employee);
+		transaction.commit();
+		session.close();
+	}
+
+	@Override
+	public void readData() {
+		// TODO Auto-generated method stub
+		Session session = factory.openSession();
+		Query query = session.createQuery("from Department");
+		List<Department> departments = query.list();
+		for (Department department : departments) {
+			System.out.println("Department Details..");
+			System.out.println(department.getId() + "\t" + department.getDeptName());
+			Set<Employee> employees = department.getEmployees();
+			for (Employee employee : employees) {
+				System.out.println("employess Details");
+				System.out.println(employee.getEmployeeId() + "\t" + employee.getEmployeeName() + "\t"
+						+ employee.getDateOfJoining() + "\t" + employee.getAddress());
+			}
+
+		}
+	}
+
+	@Override
+	public void addChild(int id) {
+		// TODO Auto-generated method stub
+		Session session = factory.openSession();
+		Department department = (Department) session.get(Department.class, id);
+		Set<Employee> set = department.getEmployees();
+		Employee employee = new Employee();
+		employee.setEmployeeName("Sravani");
+		employee.setAddress("nellore");
+		employee.setDateOfJoining(new Date());
+		Transaction transaction = session.beginTransaction();
+		set.add(employee);
+		transaction.commit();
+	}
+
+}

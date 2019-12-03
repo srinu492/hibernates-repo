@@ -1,0 +1,15 @@
+package com.test;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.util.HibernateUtil;
+
+public class Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+       SessionFactory factory=HibernateUtil.getSessionFactory();
+	}
+
+}

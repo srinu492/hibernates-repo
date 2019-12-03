@@ -1,0 +1,11 @@
+package com.dao;
+
+public class PersionDAOImpl implements PersionDAO{
+
+	@Override
+	public void getPersionAndPassportByPassportId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
